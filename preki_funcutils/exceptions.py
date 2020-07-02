@@ -1,3 +1,6 @@
+from . import status
+
+
 class PrekiException(Exception):
 
     def __init__(self, message, error_code=None, status_code=status.HTTP_400_BAD_REQUEST):
