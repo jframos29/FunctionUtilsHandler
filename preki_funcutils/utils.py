@@ -18,9 +18,9 @@ def lambda_response(func):
     @wraps(func)
     def wrapper(event, context, *args, **kwargs):
         try:
-            event['body'] = json.loads(event['body'] or '{}')
-            event['queryStringParameters'] = event['queryStringParameters'] or {}
-            event['pathParameters'] = event['pathParameters'] or {}
+            event['body'] = json.loads(event.get('body', None) or '{}')
+            event['queryStringParameters'] = event.get('queryStringParameters', None) or {}
+            event['pathParameters'] = event.get('pathParameters', None) or {}
 
             response = func(event, context, *args, **kwargs)
             return _make_response(body=response)
