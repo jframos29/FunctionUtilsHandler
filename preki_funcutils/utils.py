@@ -16,9 +16,13 @@ def _make_error(type, message, error_code, status_code):
 def lambda_response(func):
 
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(event, context, *args, **kwargs):
         try:
-            response = func(*args, **kwargs)
+            event['body'] = json.loads(event['body'] or '{}')
+            event['queryStringParameters'] = event['queryStringParameters'] or {}
+            event['pathParameters'] = event['pathParameters'] or {}
+
+            response = func(event, context, *args, **kwargs)
             return _make_response(body=response)
         except exceptions.PrekiException as e:
             logging.warning(e)
