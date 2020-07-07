@@ -32,9 +32,9 @@ def lambda_response(func):
                                status_code=e.status_code)
         except Exception as e:
             logging.exception(e)
-            _make_error(type=type(e).__name__,
-                        message=str(e),
-                        error_code=None,
-                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return _make_error(type=type(e).__name__,
+                               message=str(e),
+                               error_code=None,
+                               status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return wrapper
