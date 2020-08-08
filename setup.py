@@ -7,7 +7,7 @@ setup(
     version="1.0.0",
     author="Preki",
     author_email="david@gopreki.com",
-    packages=['preki_funcutils'],
+    packages=['preki_funcutils', 'preki_funcutils/boto'],
     url='https://gopreki.com',
     download_url="https://github.com/GoPreki/FunctionUtilsHandler",
     license="MIT",
