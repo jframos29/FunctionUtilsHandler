@@ -10,4 +10,5 @@ def call_lambda(function_name, payload, invocation_type='RequestResponse'):
         InvocationType=invocation_type,
     )
 
-    return response, parse_message(response['Payload'].read().decode('utf-8'))
+    payload = parse_message(response['Payload'].read().decode('utf-8'))
+    return response, parse_message(payload['body'])
