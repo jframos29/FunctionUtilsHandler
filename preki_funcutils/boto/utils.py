@@ -3,7 +3,7 @@ import json
 
 def stringify_message(message):
     if isinstance(message, dict) or isinstance(message, list):
-        return json.dumps(message, ensure_ascii=False)
+        return json.dumps(message, ensure_ascii=False).encode('utf8')
     return str(message)
 
 
