@@ -1,5 +1,5 @@
 import boto3
-from .utils import parse_message, stringify_message
+from ..utils import parse_message, stringify_message
 
 
 def call_lambda(function_name, payload, invocation_type='RequestResponse'):

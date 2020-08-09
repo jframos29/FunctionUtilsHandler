@@ -1,5 +1,5 @@
 import boto3
-from .utils import stringify_message
+from ..utils import stringify_message
 
 
 def send_topic_message(topic_arn, message, **kwargs):
