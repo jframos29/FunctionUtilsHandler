@@ -78,11 +78,11 @@ def delete_item(table_name, Key, ReturnValues: DeleteReturnValueType = DeleteRet
         return Parser.to_number(response['Attributes'])
 
 
-def query(table_name, IndexName, **kwargs):
+def query(table_name, KeyConditionExpression, **kwargs):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table_name)
 
-    response = table.query(IndexName=IndexName, **kwargs)
+    response = table.query(KeyConditionExpression=KeyConditionExpression, **kwargs)
 
     return Parser.to_number(response['Items']), {
         'Count': response['Count'],
