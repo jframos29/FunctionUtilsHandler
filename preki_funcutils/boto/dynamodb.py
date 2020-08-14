@@ -48,7 +48,7 @@ def update_item(table_name,
                 Key,
                 UpdateExpression,
                 ExpressionAttributeValues=None,
-                ReturnValues: UpdateReturnValueType = UpdateReturnValueType.NONE,
+                ReturnValues: UpdateReturnValueType = UpdateReturnValue.NONE,
                 **kwargs):
     if ExpressionAttributeValues:
         ExpressionAttributeValues = Parser.to_decimal(ExpressionAttributeValues)
