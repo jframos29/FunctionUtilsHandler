@@ -16,8 +16,11 @@ def _make_error(type, message, error_code, status_code):
 
 def _determine_protocol(event):
     if 'Records' in event:
+        records = event['Records']
+        if len(records) and records[0]['EventSource'] == 'aws:sns':
+            return Protocol.SNS
         return Protocol.SQS
-    elif 'httpMethod' in event:
+    else:
         return Protocol.HTTP
 
 
@@ -59,3 +62,4 @@ def lambda_response(func):
 class Protocol(Enum):
     HTTP = 'HTTP'
     SQS = 'SQS'
+    SNS = 'SNS'
