@@ -60,6 +60,7 @@ def update_item(table_name,
         table.update_item(
             Key=Key,
             UpdateExpression=UpdateExpression,
+            ExpressionAttributeValues=ExpressionAttributeValues,
             ReturnValues=ReturnValues.value,
             **kwargs,
         ))
