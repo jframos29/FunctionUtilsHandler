@@ -87,5 +87,5 @@ def query(table_name, KeyConditionExpression, **kwargs):
     return Parser.to_number(response['Items']), {
         'Count': response['Count'],
         'ScannedCount': response['ScannedCount'],
-        'LastEvaluatedKey': response['LastEvaluatedKey'],
+        'LastEvaluatedKey': response.get('LastEvaluatedKey', None),
     }
