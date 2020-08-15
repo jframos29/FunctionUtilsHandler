@@ -17,7 +17,7 @@ def _make_error(type, message, error_code, status_code):
 def _determine_protocol(event):
     if 'Records' in event:
         records = event['Records']
-        if len(records) and records[0]['EventSource'] == 'aws:sns':
+        if len(records) and records[0].get('EventSource', None) == 'aws:sns':
             return Protocol.SNS
         return Protocol.SQS
     else:
