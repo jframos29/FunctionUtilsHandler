@@ -30,7 +30,7 @@ UpdateReturnValueType = Union[UpdateReturnValue, DeleteReturnValue, CommonReturn
 def get_item(table_name, Key, **kwargs):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table_name)
-    return Parser.to_number(table.get_item(Key=Key, **kwargs)['Item'])
+    return Parser.to_number(table.get_item(Key=Key, **kwargs).get('Item', None))
 
 
 def put_item(table_name, Item, ReturnValues: PutReturnValueType = PutReturnValue.NONE, **kwargs):
@@ -41,7 +41,7 @@ def put_item(table_name, Item, ReturnValues: PutReturnValueType = PutReturnValue
     response = table.put_item(Item=Item, ReturnValues=ReturnValues.value, **kwargs)
 
     if ReturnValues == DeleteReturnValue.ALL_OLD:
-        return Parser.to_number(response['Attributes'])
+        return Parser.to_number(response.get('Attributes', None))
 
 
 def update_item(table_name,
@@ -66,7 +66,7 @@ def update_item(table_name,
         ))
 
     if ReturnValues != UpdateReturnValue.NONE:
-        return Parser.to_number(response['Attributes'])
+        return Parser.to_number(response.get('Attributes', None))
 
 
 def delete_item(table_name, Key, ReturnValues: DeleteReturnValueType = DeleteReturnValue.NONE, **kwargs):
@@ -76,7 +76,7 @@ def delete_item(table_name, Key, ReturnValues: DeleteReturnValueType = DeleteRet
     response = table.delete_item(Key=Key, ReturnValues=ReturnValues.value, **kwargs)
 
     if ReturnValues == DeleteReturnValue.ALL_OLD:
-        return Parser.to_number(response['Attributes'])
+        return Parser.to_number(response.get('Attributes', None))
 
 
 def query(table_name, KeyConditionExpression, **kwargs):
@@ -85,8 +85,8 @@ def query(table_name, KeyConditionExpression, **kwargs):
 
     response = table.query(KeyConditionExpression=KeyConditionExpression, **kwargs)
 
-    return Parser.to_number(response['Items']), {
-        'Count': response['Count'],
-        'ScannedCount': response['ScannedCount'],
+    return Parser.to_number(response.get('Items', None)), {
+        'Count': response.get('Count', None),
+        'ScannedCount': response.get('ScannedCount', None),
         'LastEvaluatedKey': response.get('LastEvaluatedKey', None),
     }
