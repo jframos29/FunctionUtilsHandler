@@ -50,23 +50,31 @@ def update_item(table_name,
                 ExpressionAttributeValues=None,
                 ReturnValues: UpdateReturnValueType = UpdateReturnValue.NONE,
                 **kwargs):
-    if ExpressionAttributeValues:
-        ExpressionAttributeValues = Parser.to_decimal(ExpressionAttributeValues)
 
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table_name)
 
-    response = Parser.to_number(
-        table.update_item(
-            Key=Key,
-            UpdateExpression=UpdateExpression,
-            ExpressionAttributeValues=ExpressionAttributeValues,
-            ReturnValues=ReturnValues.value,
-            **kwargs,
-        ))
+    if ExpressionAttributeValues:
+        ExpressionAttributeValues = Parser.to_decimal(ExpressionAttributeValues)
+        response = Parser.to_number(
+            table.update_item(
+                Key=Key,
+                UpdateExpression=UpdateExpression,
+                ExpressionAttributeValues=ExpressionAttributeValues,
+                ReturnValues=ReturnValues.value,
+                **kwargs,
+            ))
+    else:
+        response = Parser.to_number(
+            table.update_item(
+                Key=Key,
+                UpdateExpression=UpdateExpression,
+                ReturnValues=ReturnValues.value,
+                **kwargs,
+            ))
 
     if ReturnValues != UpdateReturnValue.NONE:
-        return Parser.to_number(response.get('Attributes', None))
+        return Parser.to_number(response['Attributes'])
 
 
 def delete_item(table_name, Key, ReturnValues: DeleteReturnValueType = DeleteReturnValue.NONE, **kwargs):
